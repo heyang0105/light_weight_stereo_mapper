@@ -39,7 +39,7 @@ typedef Eigen::Matrix<double, 6, 1> Vector6d;
 
 }  // namespace Eigen
 
-namespace colmap {
+namespace UTIL {
 
 ////////////////////////////////////////////////////////////////////////////////
 // Index types, determines the maximum number of objects.
@@ -70,7 +70,7 @@ const image_pair_t kInvalidImagePairId =
 const point2D_t kInvalidPoint2DIdx = std::numeric_limits<point2D_t>::max();
 const point3D_t kInvalidPoint3DId = std::numeric_limits<point3D_t>::max();
 
-}  // namespace colmap
+}  // namespace 
 
 // This file provides specializations of the templated hash function for
 // custom types. These are used for comparison in unordered sets/maps.
