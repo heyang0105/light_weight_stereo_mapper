@@ -400,4 +400,4 @@ void JobQueue<T>::Clear() {
 
 }  // namespace UTIL
 
-#endif  // COLMAP_SRC_UTIL_THREADING_
+#endif  // SRC_UTIL_THREADING_
