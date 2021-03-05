@@ -30,6 +30,10 @@ public:
 EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 
 struct Options{
+    /* CTRL: */
+    int min_track_local_map_inlier_size;
+    
+    /*INIT: path to set the camera model */
     string cam_left_yaml_path;
     string cam_right_yaml_path;
 };

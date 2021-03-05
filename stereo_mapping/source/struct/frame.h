@@ -55,8 +55,8 @@ private:
         cam_left_ = nullptr, cam_right = nullptr;
 
     // features TODO
-    std::vector<shared_ptr<Feature>> feature_left_;  
-    std::vector<shared_ptr<Feature>> feature_right_;
+    std::list<shared_ptr<Feature>> feature_left_;  
+    std::list<shared_ptr<Feature>> feature_right_;
     
     // index
     size_t cur_frame_id_ = 0;
