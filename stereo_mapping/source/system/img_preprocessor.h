@@ -23,15 +23,15 @@ public:
     ImgPreprocessor() = delete;
     ImgPreprocessor(
         const Options& opt,
-        JobQueue<ImageData>* input_queue_ptr,
-        JobQueue<ImageData>* output_queue_ptr);
+        JobQueue<inner::ImageData>* input_queue_ptr,
+        JobQueue<inner::ImageData>* output_queue_ptr);
 
 private:
     const Options options_;
     void Run();
 
-    JobQueue<ImageData>* input_queue_ptr_;
-    JobQueue<ImageData>* output_queue_ptr_;
+    JobQueue<inner::ImageData>* input_queue_ptr_;
+    JobQueue<inner::ImageData>* output_queue_ptr_;
 
 };
 

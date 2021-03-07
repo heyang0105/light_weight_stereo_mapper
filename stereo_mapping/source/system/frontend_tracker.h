@@ -30,7 +30,7 @@ public:
 EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 
 struct Options{
-    /* CTRL: */
+    /* CTRL: num to calc the local map optim */
     int min_track_local_map_inlier_size;
     
     /*INIT: path to set the camera model */
@@ -40,23 +40,38 @@ struct Options{
 
     LKOpticFlowTracker() = delete;
     LKOpticFlowTracker(const Options& opt,
-        JobQueue<ImageData>* input_queue_ptr,
-        JobQueue<TrackData>* output_queue_ptr);
-
-    // SE3d InsertStereo(
-    //             const cv::Mat &im_rect_left, 
-    //             const cv::Mat &im_rect_right,  
-    //             const double &timestamp);
+        JobQueue<inner::ImageData>* input_queue_ptr,
+        JobQueue<inner::TrackData>* output_queue_ptr);
 
 private:
+    /* CORE FUNC */
+    void StereoInit();
 
+    void InsertKeyFrame(); // set the output jo queue
+
+    void TrackByFeaturePoints(); //PnP + 2 frames BA
+
+    void TrackByMapPoints();// local BA
+
+    void ManageFeaturePoints();
+
+    bool NeedKeyFrame();
+
+    void CreateStereoMapPoints();
+
+    void PredictCurPose();
+
+    /* DATA */
     const Options option_;
 
-    JobQueue<ImageData>* input_queue_ptr_;
-    JobQueue<TrackData>* output_queue_ptr_;
+    /* pipline data ptr */
+    JobQueue<inner::ImageData>* input_queue_ptr_;
+    JobQueue<inner::TrackData>* output_queue_ptr_;
 
+    /* cameta model */
     camodocal::CameraPtr 
         cam_left_ = nullptr, cam_right = nullptr;
+
 
 };
 

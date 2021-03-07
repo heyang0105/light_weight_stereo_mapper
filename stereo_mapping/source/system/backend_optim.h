@@ -36,18 +36,18 @@ public:
 
     SlidingWinOptim() = delete;
     SlidingWinOptim(const Options& opt, 
-        JobQueue<TrackData>* input_queue_ptr,
-        JobQueue<PoseData>* output_queue_ptr);
+        JobQueue<inner::TrackData>* input_queue_ptr,
+        JobQueue<inner::PoseData>* output_queue_ptr);
 
 
 private:
     const Options options_;
 
     /* new coming frame from the frontend */
-    JobQueue<Frame>* input_queue_ptr_;
+    JobQueue<inner::Frame>* input_queue_ptr_;
 
     /* TODO to be defeined outcoming */
-    JobQueue<PoseData>* output_queue_ptr_;
+    JobQueue<inner::PoseData>* output_queue_ptr_;
 
     /* Slidng Window Frames*/
     deque<shared_ptr<Frame>> keyframes_deq_;
