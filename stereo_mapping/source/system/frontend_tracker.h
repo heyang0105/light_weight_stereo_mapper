@@ -7,23 +7,23 @@
 //c++
 #include<string>
 
-#include "camodocal/camera_models/CameraFactory.h"
-#include "camodocal/camera_models/CataCamera.h"
-#include "camodocal/camera_models/PinholeCamera.h"
+//cv
+#include <opencv2/opencv.hpp>
+
+// #include "camodocal/camera_models/CameraFactory.h"
+// #include "camodocal/camera_models/CataCamera.h"
+// #include "camodocal/camera_models/PinholeCamera.h"
 
 #include"util/threading.h"
 #include"sophus/se3.hpp"
 
+#include"data_que.h"
+
 using Sophus::SE3d;
-using namespace std;
 using namespace UTIL;
 
-namespace stereo{
+namespace stereo_mapper{
 
-namespace inner{
-    struct ImageData;
-    struct TrackData;
-}
 
 class LKOpticFlowTracker : public Thread{
 public:
@@ -34,8 +34,8 @@ struct Options{
     int min_track_local_map_inlier_size;
     
     /*INIT: path to set the camera model */
-    string cam_left_yaml_path;
-    string cam_right_yaml_path;
+    std::string cam_left_yaml_path;
+    std::string cam_right_yaml_path;
 };
 
     LKOpticFlowTracker() = delete;
@@ -44,6 +44,8 @@ struct Options{
         JobQueue<inner::TrackData>* output_queue_ptr);
 
 private:
+    void Run();
+
     /* CORE FUNC */
     void StereoInit();
 
@@ -69,10 +71,12 @@ private:
     JobQueue<inner::TrackData>* output_queue_ptr_;
 
     /* cameta model */
-    camodocal::CameraPtr 
-        cam_left_ = nullptr, cam_right = nullptr;
+    // camodocal::CameraPtr 
+    //     cam_left_ = nullptr, cam_right = nullptr;
 
 
 };
+
+}//namespace
 
 #endif

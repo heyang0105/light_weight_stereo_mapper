@@ -1,18 +1,18 @@
 #include"backend_optim.h"
 
-namespace stereo{
+namespace stereo_mapper{
 
 SlidingWinOptim::SlidingWinOptim(
     const Options& opt,
-    JobQueue<TrackData>* input_queue_ptr,
-    JobQueue<PoseData>* output_queue_ptr):
+    JobQueue<inner::TrackData>* input_queue_ptr,
+    JobQueue<inner::PoseData>* output_queue_ptr):
         options_(opt),
         input_queue_ptr_(input_queue_ptr),
         output_queue_ptr_(output_queue_ptr){
 
 }
 
-SlidingWinOptim::Run(){
+void SlidingWinOptim::Run(){
     SignalValidSetup();
     while(true){
         if (IsStopped()) break; 
@@ -24,14 +24,14 @@ SlidingWinOptim::Run(){
             
 
             //---2. prepare in 
-            auto input_data = input_job.Date();
+            auto input_data = input_job.Data();
             
             /* TODO: add my func here start */
 
             /* TODO: add my func here end */
 
             //---3. propagate the data
-            inner::TrackData out_data; // TODO
+            inner::PoseData out_data; // TODO
             output_queue_ptr->Push(out_data);
         }
         else{

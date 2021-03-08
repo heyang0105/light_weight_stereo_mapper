@@ -1,6 +1,6 @@
 #include"frontend_tracker.h"
 
-namespace stereo{
+namespace stereo_mapper{
 
 LKOpticFlowTracker::LKOpticFlowTracker(
     const Options& opt,
@@ -26,8 +26,8 @@ LKOpticFlowTracker::Run(){
 
             //---2. prepare in 
             auto input_data = input_job.Date();
-            Mat left = input_data.left;
-            Mat right = input_data.right;
+            cv::Mat left = input_data.left;
+            cv::Mat right = input_data.right;
             double time = input_data.timestamp;
             
             /* TODO: add my func here start */

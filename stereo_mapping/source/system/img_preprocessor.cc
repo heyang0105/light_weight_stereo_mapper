@@ -5,13 +5,7 @@
 
 //
 
-//cv
-#include <opencv2/opencv.hpp>
-
-using namespace std;
-using cv::Mat;
-
-namespace stereo{
+namespace stereo_mapper{
 
 ImgPreprocessor::ImgPreprocessor(
     const Options& opt,
@@ -36,9 +30,9 @@ void ImgPreprocessor::Run(){
             Mat out_left, out_right;
 
             //---2. prepare in 
-            auto input_data = input_job.Date();
-            Mat left = input_data.left;
-            Mat right = input_data.right;
+            auto input_data = input_job.Data();
+            cv::Mat left = input_data.left;
+            cv::Mat right = input_data.right;
             double time = input_data.timestamp;
             
             /* TODO: add my func here start */
@@ -46,7 +40,7 @@ void ImgPreprocessor::Run(){
             /* TODO: add my func here end */
 
             //---3. propagate the data
-            inner::ImageData out_data(time, out_left, out_right);
+            inner::ImageData out_data;
             output_queue_ptr->Push(out_data);
         }
         else{

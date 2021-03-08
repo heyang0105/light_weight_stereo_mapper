@@ -4,16 +4,18 @@
 #define SYSTEM_IMG_PREPROCESSOR_H
 
 #include<memory>
+
+//cv
+#include <opencv2/opencv.hpp>
+
 #include"util/logging.h"
 #include"util/threading.h"
 
+#include"data_que.h"
+
 using namespace UTIL;
 
-namespace stereo{
-
-namespace inner{
-    struct ImageData;
-}
+namespace stereo_mapper{
 
 class ImgPreprocessor : public Thread{
 public:

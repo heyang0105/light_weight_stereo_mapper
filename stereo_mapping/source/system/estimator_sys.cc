@@ -1,7 +1,7 @@
 // 2021-03-04
 #include"estimator_sys.h"
 
-namespace stereo{
+namespace stereo_mapper{
 
 StereoEstimator::StereoEstimator(const Options& opt) :
     options_(opt){
@@ -22,7 +22,7 @@ StereoEstimator::StereoEstimator(const Options& opt) :
     // 2. set thread + data pipline
     /* TO CHANGE HERE IF THE MODULE IS REPLACED */
     img_processor_ptr_.reset(
-        new ImgPreprocessor(options_.backend_optim_opt,
+        new ImgPreprocessor(options_.img_preprocessor_opt,
            input_img_que_ptr_.get(),
             pro_img_que_ptr_.get()));
 
@@ -39,9 +39,13 @@ StereoEstimator::StereoEstimator(const Options& opt) :
 }
 
 void StereoEstimator::InsertData(const double& timestamp,
-        const Mat& left, cons Mat& right){
+         cv::Mat& left,  cv::Mat& right){
 
-    inner::ImageData in_data(timestamp, left, right);
+    // inner::ImageData in_data(timestamp, left, right);
+    inner::ImageData in_data;
+    in_data .timestamp = timestamp;
+    left.copyTo(in_data.left);
+    right.copyTo(in_data.right);
     CHECK(input_img_que_ptr_->Push(in_data));
 }
 
@@ -78,9 +82,9 @@ void StereoEstimator::Run(){
             
 
             //---2. prepare in 
-            auto input_data = input_job.Date();
-            Mat left = input_data.left;
-            Mat right = input_data.right;
+            auto input_data = input_job.Data();
+            cv::Mat left = input_data.left;
+            cv::Mat right = input_data.right;
             double time = input_data.timestamp;
 
             /* TODO: add my func here start */

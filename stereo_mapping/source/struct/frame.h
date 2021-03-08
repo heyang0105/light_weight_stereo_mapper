@@ -24,7 +24,7 @@
 using cv::Mat;
 using namespace std;
 
-namespace stereo{
+namespace stereo_mapper{
 
 class Frame{
 public:
