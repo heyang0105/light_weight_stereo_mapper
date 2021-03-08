@@ -18,7 +18,7 @@ include_directories(
 # these two are essential for the system
 # find_package( Glog REQUIRED )
 
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/third_party/eigen-3.7)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/third_party/eigen)
 
 # Define the lib names
 set(camera_model_lib "camera_model")

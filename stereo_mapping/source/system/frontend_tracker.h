@@ -10,9 +10,9 @@
 //cv
 #include <opencv2/opencv.hpp>
 
-// #include "camodocal/camera_models/CameraFactory.h"
-// #include "camodocal/camera_models/CataCamera.h"
-// #include "camodocal/camera_models/PinholeCamera.h"
+#include "camodocal/camera_models/CameraFactory.h"
+#include "camodocal/camera_models/CataCamera.h"
+#include "camodocal/camera_models/PinholeCamera.h"
 
 #include"util/threading.h"
 #include"sophus/se3.hpp"
@@ -71,8 +71,8 @@ private:
     JobQueue<inner::TrackData>* output_queue_ptr_;
 
     /* cameta model */
-    // camodocal::CameraPtr 
-    //     cam_left_ = nullptr, cam_right = nullptr;
+    camodocal::CameraPtr 
+        cam_left_ = nullptr, cam_right = nullptr;
 
 
 };

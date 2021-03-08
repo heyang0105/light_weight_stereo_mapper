@@ -13,7 +13,7 @@ LKOpticFlowTracker::LKOpticFlowTracker(
 
 }
 
-LKOpticFlowTracker::Run(){
+void LKOpticFlowTracker::Run(){
     SignalValidSetup();
     while(true){
         if (IsStopped()) break; 
@@ -25,7 +25,7 @@ LKOpticFlowTracker::Run(){
             
 
             //---2. prepare in 
-            auto input_data = input_job.Date();
+            auto input_data = input_job.Data();
             cv::Mat left = input_data.left;
             cv::Mat right = input_data.right;
             double time = input_data.timestamp;
@@ -36,7 +36,7 @@ LKOpticFlowTracker::Run(){
 
             //---3. propagate the data
             inner::TrackData out_data; // TODO
-            output_queue_ptr->Push(out_data);
+            output_queue_ptr_->Push(out_data);
         }
         else{
             break; // end the whole process in a cascading way
