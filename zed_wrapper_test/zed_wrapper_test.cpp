@@ -14,11 +14,16 @@
 #include <thread>
 #include <string>
 #include <mutex>
+#include <memory>
 #include <ros/ros.h>
 #include <cv_bridge/cv_bridge.h>
 #include <opencv2/opencv.hpp>
 
+#include"estimator_sys.h"
+
 using namespace std;
+
+unique_ptr<stereo_mapper::StereoEstimator> sys_estimator_ptr;
 
 string IMAGE0_TOPIC = "/zed/left/image_raw_color";
 string IMAGE1_TOPIC = "/zed/right/image_raw_color";
@@ -101,6 +106,7 @@ void syncProcess(){
         
 
         /* ENTRANCE OF THE MAPPING */
+        sys_estimator_ptr->InsertData(time, image0, image1);
 
         cv::waitKey(50);
         // std::chrono::milliseconds dura(2);
@@ -115,6 +121,9 @@ int main(int argc, char **argv){
 
     ros::Subscriber sub_img0 = n.subscribe<sensor_msgs::Image>(IMAGE0_TOPIC, 20, img0Callback);
     ros::Subscriber sub_img1 = n.subscribe<sensor_msgs::Image>(IMAGE1_TOPIC, 20, img1Callback);
+
+    stereo_mapper::StereoEstimator::Options opt;
+    sys_estimator_ptr.reset(new stereo_mapper::StereoEstimator(opt));
 
     std::thread sync_Thread{syncProcess};
     ros::spin();

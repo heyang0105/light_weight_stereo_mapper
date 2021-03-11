@@ -39,12 +39,14 @@ public:
 
     StereoEstimator(const Options& opt);
 
-private:
-    const Options options_;
-    void Run();
+    /* MAIN INTERACE OF THE SYSTEM */
     void InsertData(const double& timestamp,
           cv::Mat& left,  cv::Mat& right);
 
+private:
+    const Options options_;
+    void Run();
+    
     // sub module
     /* process images: .i.e. photomatrically reimaging, or rectified, or contrast enhanced */
     /* # CUDA accelaration */

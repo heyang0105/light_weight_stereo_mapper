@@ -14,3 +14,6 @@ file(
 add_library(${project_util_lib} SHARED
     ${util_h}
     ${util_cc})
+
+target_link_libraries(${project_util_lib}
+	${GLOG_LIBRARY})
