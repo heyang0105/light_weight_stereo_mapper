@@ -1,13 +1,11 @@
-#ifndef YGZ_ORB_MATCHER_H
-#define YGZ_ORB_MATCHER_H
+//2021-03-13
+#ifndef FEATURE_ORB_MATCHER_H
+#define FEATURE_ORB_MATCHER_H
 
-#include "ygz/Settings.h"
-#include "ygz/NumTypes.h"
-#include "ygz/Align.h"
 
 #include <set>
 
-namespace ygz {
+namespace stereo_mapper {
 
     struct Frame;
     struct MapPoint;

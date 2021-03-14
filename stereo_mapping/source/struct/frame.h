@@ -30,7 +30,13 @@ class Frame{
 public:
     EIGEN_MAKE_ALIGNED_OPERATOR_NEW;
     
-    Frame(            
+    struct Opitons{
+        size_t frame_grid_rows = 30;
+        size_t frame_rid_cols = 30;
+    };
+
+    Frame(    
+        const Options& opt,        
         const cv::Mat& img_left, const cv::Mat& img_right,
         const double &timestamp,
         camodocal::CameraPtr cam_left, camodocal::CameraPtr cam_right);
@@ -40,6 +46,12 @@ public:
 
 
 private:
+    /* ### FUNC ###*/
+    /* set the index of each feature in the grid */
+    void AssignFeaturesToGrid();
+
+    const Options options_;
+
     // ---Data
     double timestamp_ = 0.0;
 
@@ -47,27 +59,33 @@ private:
     Mat img_left_, img_right_;
     
     // left and right pyramid
-    vector<Mat> pyramid_left;
-    vector<Mat> pyramid_right;
+    vector<cv::Mat> pyramid_left_;
+    vector<cv::Mat> pyramid_right_;
 
     // cam model
     camodocal::CameraPtr 
         cam_left_ = nullptr, cam_right = nullptr;
 
     // features TODO
-    std::list<shared_ptr<Feature>> feature_left_;  
-    std::list<shared_ptr<Feature>> feature_right_;
+    std::vector<shared_ptr<Feature>> feature_left_;  
+    std::vector<shared_ptr<Feature>> feature_right_;
     
     // index
     size_t cur_frame_id_ = 0;
     size_t keyframe_id_ = 0;
 
     // pose
+    Eigen::Vector4d quat_c_w_;
+    Eigen::Vector3d t_c_w_;
+
     Eigen::Vector4d quat_w_c_;
     Eigen::Vector3d t_w_c_;
 
     // info
     bool is_key_frame_ = false;
+
+    // grid to get the num of features in it 
+    std::vector<std::vector<std::size_t>> grid_;
 
 };
 
