@@ -1,0 +1,1 @@
+/usr/bin/c++  -fPIC -g  -shared -Wl,-soname,libutil.so -o ../../lib/libutil.so CMakeFiles/util.dir/common_math.cc.o CMakeFiles/util.dir/common_string.cc.o CMakeFiles/util.dir/logging.cc.o CMakeFiles/util.dir/random.cc.o CMakeFiles/util.dir/threading.cc.o CMakeFiles/util.dir/timer.cc.o -lglog 

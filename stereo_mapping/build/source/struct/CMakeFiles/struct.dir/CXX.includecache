@@ -1,0 +1,12 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/yang/odometry_project/light_weight_stereo_slam_workspace/stereo_map_ws/src/light_weight_stereo_mapper/stereo_mapping/source/struct/frame.cc
+
+/home/yang/odometry_project/light_weight_stereo_slam_workspace/stereo_map_ws/src/light_weight_stereo_mapper/stereo_mapping/source/struct/map_point.cc
+

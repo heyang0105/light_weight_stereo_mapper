@@ -1,0 +1,1 @@
+/usr/bin/c++  -fPIC -g  -shared -Wl,-soname,libstruct.so -o ../../lib/libstruct.so CMakeFiles/struct.dir/frame.cc.o CMakeFiles/struct.dir/map_point.cc.o 
