@@ -7,6 +7,9 @@
 //c++
 #include<string>
 
+//cv
+#include <opencv2/opencv.hpp>
+
 #include "camodocal/camera_models/CameraFactory.h"
 #include "camodocal/camera_models/CataCamera.h"
 #include "camodocal/camera_models/PinholeCamera.h"
@@ -14,50 +17,74 @@
 #include"util/threading.h"
 #include"sophus/se3.hpp"
 
+#include"data_que.h"
+
 using Sophus::SE3d;
-using namespace std;
 using namespace UTIL;
 
-namespace stereo{
+namespace stereo_mapper{
 
-namespace inner{
-    struct ImageData;
-    struct TrackData;
-}
 
 class LKOpticFlowTracker : public Thread{
 public:
 EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 
 struct Options{
-    /* CTRL: */
+    /* CTRL: num to calc the local map optim */
     int min_track_local_map_inlier_size;
     
     /*INIT: path to set the camera model */
-    string cam_left_yaml_path;
-    string cam_right_yaml_path;
+    std::string cam_left_yaml_path;
+    std::string cam_right_yaml_path;
 };
 
     LKOpticFlowTracker() = delete;
     LKOpticFlowTracker(const Options& opt,
-        JobQueue<ImageData>* input_queue_ptr,
-        JobQueue<TrackData>* output_queue_ptr);
-
-    // SE3d InsertStereo(
-    //             const cv::Mat &im_rect_left, 
-    //             const cv::Mat &im_rect_right,  
-    //             const double &timestamp);
+        JobQueue<inner::ImageData>* input_queue_ptr,
+        JobQueue<inner::TrackData>* output_queue_ptr);
 
 private:
+    void Run();
 
+    /* CORE FUNC */
+
+    /*  integration function in the thread */
+    void InsertStereo(const cv::Mat& left,
+             const cv::Mat & right, const double &timestamp);
+
+    /* track contains a state machine, here we just simplify it */
+    void Track();
+
+    void StereoInit();
+
+    void InsertKeyFrame(); // set the output jo queue
+
+    void TrackByFeaturePoints(); //PnP + 2 frames BA
+
+    void TrackByMapPoints();// local BA
+
+    void ManageFeaturePoints();
+
+    bool NeedKeyFrame();
+
+    void CreateStereoMapPoints();
+
+    void PredictCurPose();
+
+    /* DATA */
     const Options option_;
 
-    JobQueue<ImageData>* input_queue_ptr_;
-    JobQueue<TrackData>* output_queue_ptr_;
+    /* pipline data ptr */
+    JobQueue<inner::ImageData>* input_queue_ptr_;
+    JobQueue<inner::TrackData>* output_queue_ptr_;
 
+    /* cameta model */
     camodocal::CameraPtr 
         cam_left_ = nullptr, cam_right = nullptr;
 
+
 };
+
+}//namespace
 
 #endif

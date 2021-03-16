@@ -25,8 +25,19 @@ include_directories(
 
 catkin_package()
 
+# SET THE STEREO MAPPER PACKAGE
+include_directories(
+  ${CMAKE_CURRENT_SOURCE_DIR}/../stereo_mapping/source/system
+  ${CMAKE_CURRENT_SOURCE_DIR}/../stereo_mapping/source)
+link_directories(${CMAKE_CURRENT_SOURCE_DIR}/../stereo_mapping/build/lib)
+
+
 add_executable(zed_test zed_wrapper_test.cpp)
 target_link_libraries(zed_test 
   ${catkin_LIBRARIES}
-  ${OpenCV_LIBS})
+  ${OpenCV_LIBS}
+  camera_model  
+  stereo_estimator
+  struct
+  util)
 

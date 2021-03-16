@@ -12,14 +12,26 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
+LIST(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake_modules)
+
 include_directories(
 	${CMAKE_CURRENT_SOURCE_DIR}/source)
 
+# these two are essential for the system
+find_package( Glog REQUIRED )
+include_directories(${GLOG_INCLUDE_DIRS})
+
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/third_party/eigen)
 
 # Define the lib names
 set(camera_model_lib "camera_model")
 set(project_util_lib "util")
+set(struct_lib "struct")
 
 # integrated estimator system
 set(stereo_estimator_system_lib "stereo_estimator")
+
+#
 add_subdirectory(source)
+add_subdirectory(third_party)
+add_subdirectory(offline_test)

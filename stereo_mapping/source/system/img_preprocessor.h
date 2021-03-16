@@ -4,16 +4,18 @@
 #define SYSTEM_IMG_PREPROCESSOR_H
 
 #include<memory>
+
+//cv
+#include <opencv2/opencv.hpp>
+
 #include"util/logging.h"
 #include"util/threading.h"
 
+#include"data_que.h"
+
 using namespace UTIL;
 
-namespace stereo{
-
-namespace inner{
-    struct ImageData;
-}
+namespace stereo_mapper{
 
 class ImgPreprocessor : public Thread{
 public:
@@ -23,15 +25,15 @@ public:
     ImgPreprocessor() = delete;
     ImgPreprocessor(
         const Options& opt,
-        JobQueue<ImageData>* input_queue_ptr,
-        JobQueue<ImageData>* output_queue_ptr);
+        JobQueue<inner::ImageData>* input_queue_ptr,
+        JobQueue<inner::ImageData>* output_queue_ptr);
 
 private:
     const Options options_;
     void Run();
 
-    JobQueue<ImageData>* input_queue_ptr_;
-    JobQueue<ImageData>* output_queue_ptr_;
+    JobQueue<inner::ImageData>* input_queue_ptr_;
+    JobQueue<inner::ImageData>* output_queue_ptr_;
 
 };
 

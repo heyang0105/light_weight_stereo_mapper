@@ -5,7 +5,7 @@
 #include<memory>
 #include"Eigen/Core"
 
-namespace stereo{
+namespace stereo_mapper{
 
 class Feature;
 

@@ -13,18 +13,15 @@
 
 #include"sophus/se3.hpp"
 
+#include"data_que.h"
+
 using Sophus::SE3d;
-using namespace std;
 using namespace UTIL;
 
-namespace stereo{
+namespace stereo_mapper{
 
-class Frame
-
-namespace inner{
-    struct TrackData;
-    struct PoseData;
-}
+class Frame;
+class MapPoint;
 
 class SlidingWinOptim : public Thread{
 public:
@@ -36,22 +33,22 @@ public:
 
     SlidingWinOptim() = delete;
     SlidingWinOptim(const Options& opt, 
-        JobQueue<TrackData>* input_queue_ptr,
-        JobQueue<PoseData>* output_queue_ptr);
+        JobQueue<inner::TrackData>* input_queue_ptr,
+        JobQueue<inner::PoseData>* output_queue_ptr);
 
 
 private:
     const Options options_;
 
     /* new coming frame from the frontend */
-    JobQueue<Frame>* input_queue_ptr_;
+    JobQueue<inner::TrackData>* input_queue_ptr_;
 
     /* TODO to be defeined outcoming */
-    JobQueue<PoseData>* output_queue_ptr_;
+    JobQueue<inner::PoseData>* output_queue_ptr_;
 
     /* Slidng Window Frames*/
-    deque<shared_ptr<Frame>> keyframes_deq_;
-    set<shared_ptr<MapPoint>> map_points_set_;
+    std::deque<std::shared_ptr<Frame>> keyframes_deq_;
+    std::set<std::shared_ptr<MapPoint>> map_points_set_;
 
     void Run();
 };
