@@ -17,6 +17,8 @@ public:
     FeaturePoint(const Eigen::Vector2f& p) : 
         pixel_(p){}
 
+    //----GET
+
 private:
     // --- DATA
     Eigen::Vector2d pixel_ = Eigen::Vector2d(0., 0.); // Position in the image

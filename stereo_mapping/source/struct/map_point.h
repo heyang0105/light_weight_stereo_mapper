@@ -3,6 +3,8 @@
 #define STRUCT_MAP_POINT_H
 
 #include<memory>
+#include<mutex>
+
 #include"Eigen/Core"
 
 namespace stereo_mapper{
@@ -21,10 +23,15 @@ public:
         BAD      // 追踪质量差，删除
     };
 
-
+    //--- GET FUNC
+    State GetState(){
+        std::unique_lock<std::mutex> lock(val_mutex_);
+        return state_;
+    }
 
 private:
     // ---DATA
+    std::mutex val_mutex_; // used when we need to get values
     size_t idx_;
     State state_; 
 

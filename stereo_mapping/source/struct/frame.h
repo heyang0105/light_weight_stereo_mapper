@@ -81,7 +81,9 @@ public:
     EIGEN_MAKE_ALIGNED_OPERATOR_NEW;
     
     struct Opitons{
-
+        double pyramid_scale = 2.0;
+        size_t pyramid_num = 3;
+        size_t edge_thr = 19;
     };
 
     Frame(    
@@ -90,14 +92,20 @@ public:
         const double &timestamp,
         camodocal::CameraPtr cam_left, camodocal::CameraPtr cam_right);
     
-    Frame(const Frame &frame);
+    Frame(const Frame &frame);//TODO is this necessary???
 
-
-
-private:
     /* ### FUNC ###*/
+    // GET
+    std::vector<cv::Mat> GetLeftPyramid();
+    std::vector<cv::Mat> GetRightPyramid();
+
     /* set the index of each feature in the grid */
     void AssignFeaturesToGrid();
+
+    void ComputeImagePyramid();
+
+private:
+
 
     const Options options_;
 
@@ -105,7 +113,7 @@ private:
     double timestamp_ = 0.0;
 
     // orig image
-    Mat img_left_, img_right_;
+    cv::Mat img_left_, img_right_;
     
     // left and right pyramid
     vector<cv::Mat> pyramid_left_;
